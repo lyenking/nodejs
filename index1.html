@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>node websocket</title>
+		<style></style>
+	</head>
+<body>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>-->
+	<script src="./socket.io.js"></script>
+	<script>
+		/*var socket = io.connect("http://127.0.0.1:8885/");
+		socket.on('connect', function(){
+			alert('okl')
+		});
+		socket.on('event', function(data){});
+		socket.on('disconnect', function(){});
+		// 接受服务器的信息
+		socket.on('messge',function(data){
+			alert(data);
+			console.log(data);
+		});*/
+		
+	</script>
+	
+	
+	<ul id="message"></ul>
+    <script>
+    // 注意这个的index.html要根据server.js指定的位置”res.sendfile(__dirname + ‘/client/index.html’);”
+        
+        
+        socket = io.connect('ws://127.0.0.1:3003');
+        socket.emit("message", {"name" : navigator.userAgent, "msg" : "hello world"});
+        socket.on("message", function(obj) {
+            console.log(obj);
+        });
+
+        
+        
+    </script>
+	
+	
+	
+	
+</body>
+</html>

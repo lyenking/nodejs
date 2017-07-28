@@ -1,0 +1,17 @@
+<html>
+ <head lang="en">
+     <meta charset="UTF-8">
+     <title></title>
+     <script src="socket.io.js"></script>
+     <script>
+         var socket=io.connect("ws://127.0.0.1:1337");
+         socket.on("news", function (data) {
+             console.log(data.hello);
+             socket.emit("my other event",{my:"data"});
+         });       
+     </script>
+ </head>
+ <body>
+ 
+ </body>
+ </html>

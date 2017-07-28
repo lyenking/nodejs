@@ -1,0 +1,49 @@
+<html>
+<head>
+	<meta charset="utf-8"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script>
+        $(function(){
+            var iosocket = io.connect("ws://127.0.0.1:8088");
+ 
+            iosocket.on('connect', function () {
+                $('#incomingChatMessages').append($('<li>Connected</li>'));
+ 
+                iosocket.on('message', function(message) {
+                	alert(message.text);
+                    $('#incomingChatMessages').append($('<li></li>').text(message));
+                });
+                
+                // my test
+                iosocket.on('mytest',function(mytest){
+                	alert(mytest.text);
+                });
+                
+                iosocket.on('disconnect', function() {
+                    $('#incomingChatMessages').append('<li>Disconnected</li>');
+                });
+            });
+ 			
+            $('#outgoingChatMessage').keypress(function(event) {
+                if(event.which == 13) {
+                    event.preventDefault();
+                    iosocket.send($('#outgoingChatMessage').val());
+                    $('#incomingChatMessages').append($('<li></li>').text($('#outgoingChatMessage').val()));
+                    $('#outgoingChatMessage').val('');
+                }
+            });
+            
+            $('.fs').click(function(){
+            	console.log("send");
+            	iosocket.send($('#outgoingChatMessage').val());
+            });
+        });
+    </script>
+</head>
+<body>
+Incoming Chat:&nbsp;<ul id="incomingChatMessages"></ul>
+<br />
+<input type="text" id="outgoingChatMessage"><div class="fs">发送</div>
+</body>
+</html>
